@@ -1,9 +1,0 @@
-{
-  "extends": "./tsconfig.settings.json",
-  "files": [],
-  "references": [
-    { "path": "packages/flydrive/tsconfig.json" },
-    { "path": "packages/flydrive-gcs/tsconfig.json" },
-    { "path": "packages/flydrive-s3/tsconfig.json" },
-  ]
-}
