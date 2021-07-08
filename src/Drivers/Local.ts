@@ -9,7 +9,7 @@
 
 import * as fsExtra from 'fs-extra'
 import { dirname, join } from 'path'
-import { pipeline } from 'stream/promises'
+import { pipelinePromise } from '../utils'
 import { LocalDriverContract, LocalDriverConfig, WriteOptions } from '../Contracts'
 import { MethodNotSupportedException } from '../Exceptions/MethodNotSupportedException'
 
@@ -39,10 +39,6 @@ export class LocalDriver implements LocalDriverContract {
    */
   private getVisibilityMode(visibility: string) {
     return visibility === 'public' ? 0o644 : 0o600
-  }
-
-  private modeNumberToOctal(mode: number) {
-    return '0' + (mode & parseInt('777', 8)).toString(8)
   }
 
   /**
@@ -118,15 +114,20 @@ export class LocalDriver implements LocalDriverContract {
    * Write a stream to a destination. The missing intermediate
    * directories will be created (if required).
    */
-  public async putStream(location: string, contents: NodeJS.ReadableStream): Promise<void> {
+  public async putStream(
+    location: string,
+    contents: NodeJS.ReadableStream,
+    options?: WriteOptions
+  ): Promise<void> {
     const absolutePath = this.makePath(location)
 
     const dir = dirname(absolutePath)
     this.adapter.ensureDir(dir)
+
     const writeStream = this.adapter.createWriteStream(absolutePath, {
       mode: this.getVisibilityMode(options?.visibility || 'private'),
     })
-    await pipeline(contents, writeStream)
+    await pipelinePromise(contents, writeStream)
   }
 
   /**

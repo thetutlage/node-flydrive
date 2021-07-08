@@ -9,19 +9,12 @@
 
 import test from 'japa'
 import { join } from 'path'
-import { constants } from 'fs'
 import { readFile, remove, stat } from 'fs-extra'
+
+import { modeNumberToOctal } from '../src/utils'
 import { LocalDriver } from '../src/Drivers/Local'
 
 const TEST_ROOT = join(__dirname, '__app')
-
-/**
- * As mentioned here
- * https://www.martin-brennan.com/nodejs-file-permissions-fstat/
- */
-function modeNumberToOctal(mode: number) {
-  return '0' + (mode & parseInt('777', 8)).toString(8)
-}
 
 test.group('Local driver', (group) => {
   group.afterEach(async () => {
