@@ -62,5 +62,9 @@
   "np": {
     "contents": ".",
     "anyBranch": false
+  },
+  "dependencies": {
+    "@types/fs-extra": "^9.0.11",
+    "fs-extra": "^8.1.0"
   }
 }
