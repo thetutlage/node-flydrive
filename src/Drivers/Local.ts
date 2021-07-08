@@ -8,7 +8,7 @@
  */
 
 import * as fsExtra from 'fs-extra'
-import { dirname, join } from 'path/posix'
+import { dirname, join } from 'path'
 import { pipeline } from 'stream/promises'
 import { LocalDriverContract, LocalDriverConfig, WriteOptions } from '../Contracts'
 import { MethodNotSupportedException } from '../Exceptions/MethodNotSupportedException'
